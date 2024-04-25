@@ -1,0 +1,45 @@
+@import '../../../../styles/colors';
+
+header {
+  height: 6vh;
+  border-bottom: 2px solid #cccccc;
+}
+
+.logo {
+  font-family: Roboto-Bold, sans-serif;
+  font-size: 34px;
+  text-decoration: none;
+}
+
+.sol {
+  color: black;
+}
+
+.job {
+  color: $green-color;
+}
+
+.nav-link {
+  padding: 5px;
+  color: black;
+  font-family: Roboto-Light, sans-serif;
+}
+
+.active {
+  font-weight: bold;
+}
+
+.user-role-toggle {
+  color: $green-color;
+  font-family: Roboto-Medium, sans-serif;
+  text-decoration: none;
+  transition: box-shadow 0.3s ease;
+  border: none;
+  border-radius: 5px;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+
+.user-role-toggle:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}

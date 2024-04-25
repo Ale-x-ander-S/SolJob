@@ -1,0 +1,28 @@
+@import "../../../styles/colors.scss";
+
+.wrapper {
+  display: flex;
+  min-height: 88vh;
+}
+
+h1 {
+  font-family: Roboto-Bold, sans-serif;
+}
+
+h2 {
+  font-family: Roboto-Medium, sans-serif;
+}
+
+h5 {
+  font-family: Roboto-Regular, sans-serif;
+}
+
+.back-link {
+  font-family: Roboto-Light, sans-serif;
+  color: $green-color;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

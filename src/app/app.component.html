@@ -1,0 +1,9 @@
+@if((currentUserType$ | async) === JOBSEEKER) {
+  <app-jobseeker-navigation-panel></app-jobseeker-navigation-panel>
+} @else if ((currentUserType$ | async) === EMPLOYER) {
+  <app-employer-navigation-panel></app-employer-navigation-panel>
+} @else {
+  <app-header></app-header>
+}
+<router-outlet></router-outlet>
+<!--<app-footer></app-footer>-->

@@ -1,0 +1,50 @@
+<div class="wrapper">
+  <div class="container">
+    <div class="row my-3">
+      <h1>Мои вакансии</h1>
+    </div>
+    <div class="row">
+      <div class="col-md-8">
+        @for (vacancy of employerVacancies$ | async; track vacancy.vacancyId) {
+          <div class="card mb-3">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-10">
+                  <h4 class="card-title">
+                    <span class="profession">{{ vacancy.professionName }}</span>
+                    <span class="organization">({{ vacancy.organizationName }})</span>
+                  </h4>
+                </div>
+                <div class="col-2 text-end d-flex align-item-center  d-flex justify-content-end">
+                  <i class="bi bi-eye fs-6 text-muted"></i>
+                  <small>12</small>
+                </div>
+              </div>
+              @if (vacancy.professionSpecialization) {
+                <p class="card-text">{{ vacancy.professionSpecialization }}</p>
+              }
+              @if (vacancy.expectedIncomePerMonthTo) {
+                <p class="income-per-month">ЗП: oт {{ vacancy.expectedIncomePerMonthFrom }}
+                  до {{ vacancy.expectedIncomePerMonthTo }} ₽</p>
+              } @else {
+                <p class="income-per-month">ЗП: {{ vacancy.expectedIncomePerMonthFrom }} ₽</p>
+              }
+            </div>
+            <div class="d-flex justify-content-between mx-3 mb-2">
+              <div class="col-5 col-md-3">
+                <a routerLink="../vacancy-edit/{{vacancy.vacancyId}}" class="edit-vacancy-link">
+                  Редактировать
+                </a>
+              </div>
+              <div class="col-7 col-md-4 text-end">
+                <small class="text-muted m-2">
+                  от {{ vacancy.createdDateUTC | date: "dd-MM-yyyy":"UTC-0200" }}
+                </small>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,36 @@
+# Папка с зависимостями
+node_modules/
+angular/
+
+# Папки и файлы сборки
+dist/
+tmp/
+
+# Файлы редакторов
+*.swp
+*.swo
+.idea/
+*.sublime*
+*.vscode/
+*.webstorm*
+.history/
+
+# Файлы среды выполнения
+enviroments/
+
+# Пакетные файлы
+package-lock.json
+
+# Файлы конфигурации Angular
+.angular
+/angular.json
+/ng-package.json
+
+# Файлы TypeScript
+*.tsbuildinfo
+
+# Файлы TypeScript типизации
+typings/
+
+# Папки с отчетами о покрытии
+coverage/

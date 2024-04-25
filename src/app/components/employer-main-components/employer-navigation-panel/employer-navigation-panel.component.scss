@@ -1,0 +1,58 @@
+@import '../../../../styles/colors';
+
+
+.navbar {
+  background-color: #333333;
+}
+
+.logo {
+  font-family: Roboto-Bold, sans-serif;
+  font-size: 34px;
+  text-decoration: none;
+}
+
+.sol {
+  margin-left: 20px;
+  color: $light-color;
+}
+
+.job {
+  color: $green-color;
+}
+
+.resume-link {
+  text-decoration: none;
+  font-family: Roboto-Regular, sans-serif;
+  color: aliceblue;
+}
+
+.resume-link:hover {
+  color: darkgray;
+}
+
+.resume-link.active {
+  color: $green-color;
+}
+
+i {
+  color: aliceblue;
+}
+
+i:hover {
+  color: darkgray;
+}
+
+.active {
+  i {
+    color: $green-color;
+  }
+}
+
+.matMenu {
+  cursor: pointer;
+}
+
+.exit-button {
+  color: red;
+}
+

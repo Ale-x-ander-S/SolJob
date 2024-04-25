@@ -1,0 +1,105 @@
+<div class="wrapper">
+  <div class="container">
+    <div class="row d-flex justify-content-center">
+      <div class="col-sm-6 col-md-3 col-12 my-5">
+        <form [formGroup]="userRegistrationForm" ngxsForm="userRegistrationForm">
+          @if (isFirstRegistrationPart) {
+            <div [ngClass]="firstNameValidationErrorMessage ? 'mb-0' : 'mb-3'">
+              <label for="firstName" class="form-label">Имя<span style="color: red;">*</span></label>
+              <input [formControl]="firstNameControl"
+                     (input)="resetValidationErrorMessage('firstName')"
+                     type="text"
+                     class="form-control shadow-sm"
+                     maxlength="30"
+                     id="firstName"
+                     aria-describedby="Введите имя"
+              >
+            </div>
+            @if (firstNameValidationErrorMessage) {
+              <div class="mb-3">
+                <small class="text-danger small-text">{{ firstNameValidationErrorMessage }}</small>
+              </div>
+            }
+            <div [ngClass]="emailValidationErrorMessage ? 'mb-0' : 'mb-3'">
+              <label for="email" class="form-label">Email<span style="color: red;">*</span></label>
+              <input [formControl]="emailControl"
+                     (input)="resetValidationErrorMessage('email')"
+                     type="email"
+                     class="form-control shadow-sm"
+                     maxlength="100"
+                     id="email"
+                     aria-describedby="Введите Email"
+              >
+            </div>
+            @if (emailValidationErrorMessage) {
+              <div class="mb-3">
+                <small class="text-danger small-text">{{ emailValidationErrorMessage }}</small>
+              </div>
+            }
+          } @else {
+            <div [ngClass]="passwordValidationErrorMessage ? 'mb-0' : 'mb-3'">
+              <label for="password" class="form-label">Пароль<span style="color: red;">*</span></label>
+              <input [formControl]="passwordControl"
+                     (input)="resetValidationErrorMessage('password')"
+                     type="password"
+                     class="form-control shadow-sm"
+                     maxlength="20"
+                     id="password"
+                     aria-describedby="Введите пароль"
+                     autocomplete="off"
+              >
+            </div>
+            @if (passwordValidationErrorMessage) {
+              <div class="mb-3">
+                <small class="text-danger small-text">{{ passwordValidationErrorMessage }}</small>
+              </div>
+            }
+            <div [ngClass]="checkedPasswordValidationErrorMessage || (serverErrorMessage$ | async) ? 'mb-0' : 'mb-3'">
+              <label for="repeatedPassword" class="form-label">Повторите пароль<span
+                style="color: red;">*</span></label>
+              <input [formControl]="repeatedPasswordControl"
+                     (input)="resetValidationErrorMessage('repeatPassword')"
+                     type="password"
+                     class="form-control shadow-sm"
+                     maxlength="20"
+                     id="repeatedPassword"
+                     aria-describedby="Повторите пароль"
+                     autocomplete="off"
+              >
+            </div>
+            @if (checkedPasswordValidationErrorMessage) {
+              <div class="mb-3">
+                <small class="text-danger small-text">{{ checkedPasswordValidationErrorMessage }}</small>
+              </div>
+            }
+            @if ((serverErrorMessage$ | async) && !checkedPasswordValidationErrorMessage) {
+              <div class="mb-3">
+                <small class="text-danger small-text">{{ serverErrorMessage$ | async }}</small>
+              </div>
+            }
+          }
+        </form>
+        @if (isFirstRegistrationPart) {
+          <app-custom-button (click)="isNameAndEmailControlsValid()" class="my-3">Далее</app-custom-button>
+        } @else {
+            <app-custom-button (click)="registerUser()" class="my-3">
+              @if (isLoading$ | async) {
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+              }
+              Продолжить
+            </app-custom-button>
+        }
+      </div>
+      <div class="row justify-content-center">
+        <small class="text-center">
+          @if (!isFirstRegistrationPart) {
+            <a class="back-link" (click)="toggleIsFirstRegistrationPart()"
+               routerLink="/{{ generateBackLink }}/registration">Назад</a>
+          } @else {
+            <a class="back-link" routerLink="../">Назад</a>
+          }
+        </small>
+      </div>
+    </div>
+  </div>
+</div>

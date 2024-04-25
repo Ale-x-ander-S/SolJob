@@ -1,0 +1,145 @@
+@import "../../../../styles/colors.scss";
+
+.wrapper {
+  min-height: 88vh;
+  display: flex;
+}
+
+.form-control:focus {
+  border-color: $green-color;
+}
+
+.input-search-container {
+  position: relative;
+}
+
+.input-search-container .clear-icon {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  cursor: pointer;
+
+  &:hover {
+    color: $green-color;
+  }
+}
+
+.search-results {
+  border: 1px solid #ccc;
+  padding: 10px;
+  list-style-type: none;
+  font-family: Roboto-Regular, sans-serif;
+}
+
+.search-label {
+  font-family: Roboto-Regular, sans-serif;
+  font-size: 0.8rem;
+  text-decoration: none;
+  color: $green-color;
+  cursor: pointer;
+}
+
+.search-label:hover {
+  text-decoration: underline;
+}
+
+.search-results li {
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.search-results li:hover {
+  background-color: #f0f0f0;
+}
+
+h5 {
+  font-family: Roboto-Regular, sans-serif;
+}
+
+h6, .close-button {
+  font-family: Roboto-Regular, sans-serif;
+  font-size: 0.8rem;
+}
+
+.radio-label {
+  font-family: Roboto-Light, sans-serif;
+  font-size: 0.8rem;
+}
+
+.search-button {
+  font-family: Roboto-Light, sans-serif;
+}
+
+.btn-close {
+  border-color: red;
+}
+
+input[type="radio"] {
+  appearance: none;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  position: relative;
+  border: 2px solid #ccc;
+  border-radius: 3px;
+  outline: none;
+}
+
+input[type="radio"]:checked {
+  background-color: $green-color;
+}
+
+input[type="radio"]::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 10px;
+  height: 10px;
+  background-color: $light-color;
+  border-radius: 50%;
+  display: none;
+}
+
+input[type="radio"]:checked::before {
+  display: block;
+}
+
+.main-img {
+  display: flex;
+  width: 30vh;
+  height: 30vh;
+  opacity: 0.2;
+}
+
+.no-found-title {
+  font-family: Roboto-Bold, sans-serif;
+  font-size: 18px;
+}
+
+.reset-filter {
+  color: $green-color;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.truncate {
+  font-family: Roboto-Light, sans-serif;
+  font-size: 10px;
+  height: 25px;
+  overflow: clip;
+  box-shadow: 0 0 2px $green-color;
+  border-radius: 5px;
+  box-sizing: border-box;
+
+  &:hover {
+    cursor: pointer;
+    box-shadow: 0 0 2px $danger-color;
+    border: none;
+  }
+}

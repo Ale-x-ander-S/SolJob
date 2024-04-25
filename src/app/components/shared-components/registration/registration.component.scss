@@ -1,0 +1,31 @@
+@import "../../../../styles/colors.scss";
+
+.wrapper {
+  min-height: 88vh;
+}
+
+.form-control:focus {
+  border-color: $green-color;
+}
+
+label {
+  font-family: Roboto-Regular, sans-serif;
+}
+
+button, input, small {
+  font-family: Roboto-Light, sans-serif;
+}
+
+.success {
+  position: relative;
+  color: var(--tui-success-fill);
+}
+
+.back-link {
+  color: $gray-color;
+  text-decoration: none;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}

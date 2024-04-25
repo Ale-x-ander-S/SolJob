@@ -1,0 +1,11 @@
+<button
+  [style.background-color]="backgroundColor"
+  [style.color]="textColor"
+  [style.border]="borderWidth + ' solid ' + borderColor"
+  [style.transition]="'background-color 0.2s ease'"
+  [style.box-shadow]="boxShadow"
+  [style.padding]="padding"
+  [disabled]="disabled"
+>
+  <ng-content></ng-content>
+</button>

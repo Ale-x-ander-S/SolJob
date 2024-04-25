@@ -1,0 +1,35 @@
+@import "../../../../styles/colors.scss";
+
+
+.wrapper {
+  min-height: 88vh;
+  display: flex;
+}
+
+h1, h4, label {
+  font-family: Roboto-Regular, sans-serif;
+}
+
+.form-control:focus {
+  border-color: $green-color;
+}
+
+input, button {
+  font-family: Roboto-Light, sans-serif;
+}
+
+.change {
+  color: #3F51B5;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.change:hover {
+  font-weight: 400;
+}
+
+.error-message {
+  font-size: 0.8rem;
+  font-family: Roboto-Light, sans-serif;
+}
+

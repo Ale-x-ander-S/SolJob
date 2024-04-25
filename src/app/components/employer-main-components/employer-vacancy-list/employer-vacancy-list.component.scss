@@ -1,0 +1,51 @@
+@import '../../../../styles/colors';
+
+
+.wrapper {
+  display: flex;
+  min-height: 88vh;
+}
+
+h1 {
+  font-family: Roboto-Regular, sans-serif;
+}
+
+.card:hover {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.card-title span {
+  display: block;
+}
+
+.profession {
+  font-family: Roboto-Bold, sans-serif;
+}
+
+.organization {
+  font-family: Roboto-Light, sans-serif;
+}
+
+.card-text {
+  font-family: Roboto-Regular, sans-serif;
+}
+
+small {
+  font-family: Roboto-Light, sans-serif;
+}
+
+.income-per-month {
+  font-family: Roboto-Light, sans-serif;
+}
+
+.edit-vacancy-link {
+  font-family: Roboto-Light, sans-serif;
+  text-decoration: none;
+  color: $green-color;
+
+  &:hover {
+    color: darken($green-color, 5px);
+    text-decoration: underline;
+  }
+}
+

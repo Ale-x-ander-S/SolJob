@@ -1,0 +1,383 @@
+<div class="wrapper">
+  <div class="container">
+    <h1 class="my-3">Настройки</h1>
+    <form [formGroup]="userNameForm">
+      @if (!(editMode && activeField === 'userName')) {
+        <div class="row mb-4">
+          <h4 class="m-0">Имя:</h4>
+          <div class="d-flex col-12">
+            <div class="col-sm-4 col-6 d-flex align-items-end">
+              <span>{{ (userInfo$ | async)?.lastName }} {{ (userInfo$ | async)?.firstName }} {{ (userInfo$ | async)?.middleName }}</span>
+            </div>
+            <div class="d-flex justify-content-end col-sm-2 col-6">
+              <app-custom-button
+                (click)="toggleEditMode('userName')"
+                class="mx-2"
+                backgroundColor="#ffffff"
+                textColor="#3F51B5"
+                borderWidth="1px"
+                borderColor="#cccccc"
+              >
+                Изменить
+              </app-custom-button>
+            </div>
+          </div>
+        </div>
+      } @else {
+        <div class="form-group col-md-3 col-12 mb-3">
+          <label for="firstName">Имя <span style="color: red;">*</span></label>
+          <div [ngClass]="validationErrorMessage ? 'mb-0' : 'mb-3'" class="input-group">
+            <input formControlName="firstName"
+                   (input)="clearErrorMessagesAndForm(undefined)"
+                   type="text"
+                   class="form-control shadow-sm"
+                   maxlength="30" id="firstName"
+                   aria-describedby="firstName"
+            >
+          </div>
+          @if (validationErrorMessage) {
+            <div class="mb-3">
+              <small class="error-message text-danger small-text">{{ validationErrorMessage }}</small>
+            </div>
+          }
+          <label for="lastName">Фамилия</label>
+          <div class="input-group mb-3">
+            <input formControlName="lastName"
+                   (input)="clearErrorMessagesAndForm(undefined)"
+                   type="text" class="form-control shadow-sm"
+                   maxlength="30"
+                   id="lastName"
+                   aria-describedby="lastName"
+            >
+          </div>
+          <label for="middleName">Отчество</label>
+          <div class="input-group mb-3">
+            <input formControlName="middleName"
+                   (input)="clearErrorMessagesAndForm(undefined)"
+                   type="text"
+                   class="form-control shadow-sm"
+                   maxlength="30" id="middleName"
+                   aria-describedby="middleName"
+            >
+          </div>
+        </div>
+        <div class="my-3">
+          <app-custom-button
+            (click)="toggleEditMode('userName')"
+            backgroundColor="#ffffff"
+            textColor="black"
+            borderWidth="1px"
+            borderColor="#cccccc"
+          >
+            Закрыть
+          </app-custom-button>
+          <app-custom-button (click)="updateUserInfo()" class="mx-2">
+            @if (isLoading$ | async) {
+              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            }
+            Сохранить
+          </app-custom-button>
+        </div>
+      }
+    </form>
+    <form [formGroup]="userEmailForm">
+      @if (!(editMode && activeField === 'email')) {
+        <div class="email mb-4">
+          <h4 class="m-0">Email:</h4>
+          <div class="d-flex col-12" id="email">
+            <div class="col-sm-4 col-6 d-flex align-items-end">
+              <span>{{ (userInfo$ | async)?.email }}</span>
+            </div>
+            <div class="d-flex justify-content-end col-sm-2 col-6">
+              <app-custom-button
+                (click)="toggleEditMode('email')"
+                class="mx-2"
+                backgroundColor="#ffffff"
+                textColor="#3F51B5"
+                borderWidth="1px"
+                borderColor="#cccccc"
+              >
+                Изменить
+              </app-custom-button>
+            </div>
+          </div>
+        </div>
+      } @else {
+        <div class="form-group col-md-3 col-12 mb-3">
+          <div class="form-group row mb-3">
+            <label for="currentEmail" class="col-md-3 col-12">Email: </label>
+            <div class="col-md-9 col-12 d-flex align-items-center">
+              <span id="currentEmail">{{ (userInfo$ | async)?.email }}</span>
+            </div>
+          </div>
+          <label for="newEmail">Новый Email</label>
+          <div [ngClass]="validationErrorMessage ? 'mb-0' : 'mb-3'" class="input-group">
+            <input formControlName="email"
+                   (input)="clearErrorMessagesAndForm(undefined)"
+                   type="text"
+                   class="form-control shadow-sm"
+                   maxlength="100"
+                   id="newEmail"
+                   aria-describedby="newEmail"
+            >
+          </div>
+          @if (validationErrorMessage) {
+            <div class="mb-3">
+              <small class="error-message text-danger small-text">{{ validationErrorMessage }}</small>
+            </div>
+          }
+          <label for="emailConfirmationPassword">Пароль</label>
+          <div [ngClass]="(serverErrorMessage$ | async) ? 'mb-0' : 'mb-3'" class="input-group">
+            <input formControlName="password"
+                   (input)="clearErrorMessagesAndForm(undefined)"
+                   type="password"
+                   class="form-control shadow-sm"
+                   maxlength="20"
+                   id="emailConfirmationPassword"
+                   aria-describedby="Введите пароль"
+                   autocomplete="off"
+            >
+          </div>
+          @if (serverErrorMessage$ | async) {
+            <div class="mb-3">
+              <small class="error-message text-danger small-text">{{ serverErrorMessage$ | async }}</small>
+            </div>
+          }
+        </div>
+        <div class="my-3">
+          <app-custom-button
+            (click)="toggleEditMode('email')"
+            backgroundColor="#ffffff"
+            textColor="black"
+            borderWidth="1px"
+            borderColor="#cccccc"
+          >
+            Закрыть
+          </app-custom-button>
+          <app-custom-button (click)="updateUserInfo()" class="mx-2">
+            @if (isLoading$ | async) {
+              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            }
+            Сохранить
+          </app-custom-button>
+        </div>
+      }
+    </form>
+    <form [formGroup]="userPasswordForm">
+      @if (!(editMode && activeField === 'password')) {
+        <div class="row mb-4">
+          <h4 class="m-0">Пароль</h4>
+          <div class="d-flex col-12" id="password">
+            <div class="col-sm-4 col-6 d-flex align-items-end">
+              <span>********</span>
+            </div>
+            <div class="d-flex justify-content-end col-sm-2 col-6">
+              <app-custom-button
+                (click)="toggleEditMode('password')"
+                class="mx-2"
+                backgroundColor="#ffffff"
+                textColor="#3F51B5"
+                borderWidth="1px"
+                borderColor="#cccccc"
+              >
+                Изменить
+              </app-custom-button>
+            </div>
+          </div>
+        </div>
+      } @else {
+        <div class="form-group col-md-4 col-12 mb-3">
+          <label for="currentPassword">Старый пароль</label>
+          <div [ngClass]="(serverErrorMessage$ | async) ? 'mb-0' : 'mb-3'" class="input-group">
+            <input formControlName="password"
+                   (input)="clearErrorMessagesAndForm(undefined)"
+                   type="password"
+                   class="form-control shadow-sm"
+                   maxlength="20"
+                   id="currentPassword"
+                   aria-describedby="password"
+            >
+          </div>
+          @if (serverErrorMessage$ | async) {
+            <div class="mb-3">
+              <small class="error-message text-danger small-text">{{ serverErrorMessage$ | async }}</small>
+            </div>
+          }
+          <label for="newPassword">Новый пароль</label>
+          <div class="input-group mb-3">
+            <input formControlName="newPassword"
+                   (input)="clearErrorMessagesAndForm(undefined)"
+                   type="password"
+                   class="form-control shadow-sm"
+                   maxlength="20"
+                   id="newPassword"
+                   aria-describedby="newPassword"
+            >
+          </div>
+          <label for="repeatNewPassword">Повторите пароль</label>
+          <div [ngClass]="validationErrorMessage ? 'mb-0' : 'mb-3'" class="input-group">
+            <input formControlName="repeatNewPassword"
+                   (input)="clearErrorMessagesAndForm(undefined)"
+                   type="password"
+                   class="form-control shadow-sm"
+                   maxlength="20"
+                   id="repeatNewPassword"
+                   aria-describedby="repeatNewPassword"
+            >
+          </div>
+          @if (validationErrorMessage) {
+            <div class="mb-3">
+              <small class="error-message text-danger small-text">{{ validationErrorMessage }}</small>
+            </div>
+          }
+          <div class="my-3">
+            <app-custom-button
+              (click)="toggleEditMode('password')"
+              backgroundColor="#ffffff"
+              textColor="black"
+              borderWidth="1px"
+              borderColor="#cccccc"
+            >
+              Закрыть
+            </app-custom-button>
+            <app-custom-button (click)="updateUserInfo()" class="mx-2">
+              @if (isLoading$ | async) {
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+              }
+              Сохранить
+            </app-custom-button>
+          </div>
+        </div>
+      }
+    </form>
+    <form [formGroup]="userPhoneNumberForm">
+      @if (!(editMode && activeField === 'phoneNumber')) {
+        <div class="row mb-4">
+          <h4 class="m-0">Номер телефона</h4>
+          <div class="d-flex col-12" id="phoneNumber">
+            <div class="col-sm-4 col-6 d-flex align-items-end">
+              <span>{{ (userInfo$ | async)?.phoneNumber }}</span>
+            </div>
+            <div class="d-flex justify-content-end col-sm-2 col-6">
+              <app-custom-button
+                (click)="toggleEditMode('phoneNumber')"
+                class="mx-2"
+                backgroundColor="#ffffff"
+                textColor="#3F51B5"
+                borderWidth="1px"
+                borderColor="#cccccc"
+              >
+                Изменить
+              </app-custom-button>
+            </div>
+          </div>
+        </div>
+      } @else {
+        <div class="form-group col-md-3 col-12 mb-3">
+          <div class="form-group row mb-3">
+            <label for="currentPhoneNumber" class="col-md-7 col-12">Номер телефона: </label>
+            <div class="col-md-5 col-12 d-flex align-items-center">
+              <span id="currentPhoneNumber">{{ (userInfo$ | async)?.phoneNumber }}</span>
+            </div>
+          </div>
+          <label for="newPhoneNumber">Новый номер телефона</label>
+          <div class="input-group mb-3">
+            <input formControlName="phoneNumber"
+                   (input)="clearErrorMessagesAndForm(undefined)"
+                   type="tel"
+                   class="form-control shadow-sm"
+                   maxlength="16"
+                   id="newPhoneNumber"
+                   aria-describedby="newPhoneNumber"
+                   [value]="formattedPhoneNumber"
+            >
+          </div>
+          @if (validationErrorMessage) {
+            <div class="mb-3">
+              <small class="error-message text-danger small-text">{{ validationErrorMessage }}</small>
+            </div>
+          }
+          <label for="emailConfirmationPhoneNumber">Пароль</label>
+          <div [ngClass]="(serverErrorMessage$ | async) ? 'mb-0' : 'mb-3'" class="input-group">
+            <input formControlName="password"
+                   (input)="clearErrorMessagesAndForm(undefined)"
+                   type="password"
+                   class="form-control shadow-sm"
+                   id="emailConfirmationPhoneNumber"
+                   maxlength="20"
+                   aria-describedby="Введите пароль"
+                   autocomplete="off"
+            >
+          </div>
+          @if (serverErrorMessage$ | async) {
+            <div class="mb-3">
+              <small class="error-message text-danger small-text">{{ serverErrorMessage$ | async }}</small>
+            </div>
+          }
+        </div>
+        <div class="my-3">
+          <app-custom-button
+            (click)="toggleEditMode('phoneNumber')"
+            backgroundColor="#ffffff"
+            textColor="black"
+            borderWidth="1px"
+            borderColor="#cccccc"
+          >
+            Закрыть
+          </app-custom-button>
+          <app-custom-button (click)="updateUserInfo()" class="mx-2">
+            @if (isLoading$ | async) {
+              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            }
+            Сохранить
+          </app-custom-button>
+        </div>
+      }
+    </form>
+    <form [formGroup]="deleteAccountForm">
+      <div class="mt-3">
+        @if (!(editMode && activeField === 'delete')) {
+          <button (click)="toggleEditMode('delete')" mat-stroked-button color="warn" class="change">Удалить аккаунт
+          </button>
+        } @else {
+          <div class="form-group col-md-3 col-12 mb-3">
+            <label for="passwordToDeleteAccount">Введите пароль</label>
+            <div [ngClass]="(serverErrorMessage$ | async) ? 'mb-0' : 'mb-3'" class="input-group">
+              <input formControlName="password" type="password" class="form-control shadow-sm" maxlength="20"
+                     id="passwordToDeleteAccount" aria-describedby="passwordToDeleteAccount">
+            </div>
+            @if (serverErrorMessage$ | async) {
+              <div class="mb-3">
+                <small class="error-message text-danger small-text">{{ serverErrorMessage$ | async }}</small>
+              </div>
+            }
+          </div>
+          <div class="my-3">
+            <app-custom-button
+              (click)="toggleEditMode('delete')"
+              backgroundColor="#ffffff"
+              textColor="black"
+              borderWidth="1px"
+              borderColor="#cccccc"
+            >
+              Назад
+            </app-custom-button>
+            <app-custom-button
+              (click)="deleteUser()"
+              class="mx-2"
+              backgroundColor="#ffffff"
+              textColor="red"
+              borderWidth="1px"
+              borderColor="#cccccc"
+            >
+              @if (isLoading$ | async) {
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+              }
+              Удалить
+            </app-custom-button>
+          </div>
+        }
+      </div>
+    </form>
+  </div>
+</div>

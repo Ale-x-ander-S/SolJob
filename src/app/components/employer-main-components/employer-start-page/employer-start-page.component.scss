@@ -1,0 +1,15 @@
+@import "../../../../styles/colors";
+
+.wrapper {
+  background-image: url('../../../../assets/img/background-img.jpg');
+  background-size: cover;
+  background-position: center;
+  min-height: 89vh;
+  display: flex;
+}
+
+
+.main-title {
+  color: $light-color;
+  font-family: Roboto-Medium, sans-serif;
+}

@@ -1,0 +1,66 @@
+@import '../../../../styles/colors';
+
+.wrapper {
+  display: flex;
+  min-height: 88vh;
+}
+
+h1, h2 {
+  font-family: Roboto-Medium, sans-serif;
+}
+
+.profession {
+  font-family: Roboto-Bold, sans-serif;
+}
+
+.organization {
+  font-family: Roboto-Light, sans-serif;
+}
+
+.input-label {
+  font-family: Roboto-Regular, sans-serif;
+  font-size: 18px;
+}
+
+.line {
+  border: none;
+  border-top: 2px solid $dark-color;
+  width: 100%;
+}
+
+.form-control {
+  font-family: Roboto-Light, sans-serif;
+}
+
+.form-control:focus {
+  border-color: $green-color;
+}
+
+.rounded-right-0 {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.rounded-left-0 {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+input[type="radio"] {
+  appearance: none;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid #cccccc;
+  background-color: #ffffff;
+  cursor: pointer;
+}
+
+input[type="radio"]:checked {
+  background-color: $green-color;
+}
+
+.error-message {
+  font-family: Roboto-Regular, sans-serif;
+}

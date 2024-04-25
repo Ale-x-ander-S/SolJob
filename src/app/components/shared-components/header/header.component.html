@@ -1,0 +1,32 @@
+<header class="d-flex align-items-center">
+  <div class="container">
+    <div class="row">
+      <div class="col-3 col-md-2 d-flex align-items-center">
+        <a routerLink="" class="logo m-0">
+          <span class="sol">Sol</span><span class="job">Job</span>
+        </a>
+      </div>
+      <div class="col-6 d-flex align-items-center navigation-links d-none d-md-flex">
+        @if (isJobseekerStartPage$ | async) {
+          <a routerLink="/" routerLinkActive="active" class="col-4 nav-link">Вакансии</a>
+        } @else {
+          <a routerLink="/" routerLinkActive="active" class="col-4 nav-link">Соискатели</a>
+        }
+        <a routerLink="/" routerLinkActive="active" class="col-3 nav-link">Компании</a>
+      </div>
+      <div class="col-9 col-md-4 d-flex align-items-center justify-content-end">
+        <nav class="p-0">
+          <a
+            class="user-role-toggle"
+            [routerLink]="(isJobseekerStartPage$ | async) ? '/employer' : '/jobseeker'"
+            (click)="toggleStartPageType()"
+          >
+            {{ (isJobseekerStartPage$ | async) ? "Работодатель?" : "Соискатель?" }}
+          </a>
+        </nav>
+      </div>
+    </div>
+  </div>
+</header>
+
+

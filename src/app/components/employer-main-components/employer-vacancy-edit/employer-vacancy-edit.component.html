@@ -1,0 +1,171 @@
+<div class="wrapper">
+  <div class="container">
+    <div class="row my-3">
+      <h1>Редактировать вакансию</h1>
+    </div>
+    <form [formGroup]="editingVacancyForm" ngxsForm="editingVacancyForm" class="form my-1">
+      <div>
+        <h2 class="m-0">
+          <span class="profession d-block d-md-inline">{{ (vacancyToEdit$ | async)?.professionName }} </span>
+          <span class="organization d-block d-md-inline">({{ (vacancyToEdit$ | async)?.organizationName }})</span>
+        </h2>
+      </div>
+      <hr class="line">
+      <div class="col-12 col-md-6 my-3">
+        <label for="professionSpecialization" class="input-label my-3">Специализация</label>
+        <input formControlName="professionSpecialization"
+               type="text"
+               id="professionSpecialization"
+               class="form-control shadow-sm"
+               maxlength="100"
+        >
+      </div>
+      <div class="col-12 col-md-7 my-3">
+        <label for="expectedIncomePerMonthFrom" class="input-label my-3">
+          Уровень дохода: <span style="color: red;">*</span>
+        </label>
+        <div class="input-group">
+          <div class="col-5">
+            <input formControlName="expectedIncomePerMonthFrom"
+                   id="expectedIncomePerMonthFrom"
+                   type="text"
+                   class="form-control flex-grow-1 text-center rounded-right-0 shadow-sm"
+                   maxlength="10"
+                   placeholder="От"
+                   aria-label="Уровень дохода от"
+            >
+          </div>
+          <div class="col-5">
+            <input formControlName="expectedIncomePerMonthTo"
+                   type="text"
+                   class="form-control flex-grow-1 text-center rounded-left-0 shadow-sm"
+                   maxlength="10"
+                   placeholder="До"
+                   aria-label="Уровень дохода до"
+            >
+          </div>
+          <div class="col-1 d-flex align-items-center justify-content-center">
+            <label class="text-muted fs-3">₽</label>
+          </div>
+        </div>
+      </div>
+      @if (validationErrorMessage) {
+        <div class="mb-3">
+          <small class="error-message text-danger small-text" #errorMessage>{{ validationErrorMessage }}</small>
+        </div>
+      }
+      <div class="col-12 col-md-7 my-3">
+        <label class="input-label my-3">
+          Опыт работы <span style="color: red;">*</span>
+        </label>
+        @for (level of experienceLevels; track level.id) {
+          <div class="d-flex align-items-center mb-3">
+            <input formControlName="workExperienceId"
+                   type="radio"
+                   id="workExperience{{ level.id }}"
+                   name="workExperienceId"
+                   [value]="level.id"
+            />
+            <label class="mx-3 checkbox-label" for="workExperience{{ level.id }}">{{ level.name }}</label>
+          </div>
+        }
+      </div>
+      <div class="col-12 col-md-7 my-3">
+        <label class="input-label my-3">
+          Тип занятости <span style="color: red;">*</span>
+        </label>
+        @for (employmentType of employmentTypes; track employmentType.id) {
+          <div class="d-flex align-items-center mb-3">
+            <input formControlName="employmentTypeId"
+                   type="radio"
+                   id="employmentType{{ employmentType.id }}"
+                   name="employmentTypeId"
+                   [value]="employmentType.id"
+            />
+            <label class="mx-3 checkbox-label" for="employmentType{{ employmentType.id }}">
+              {{ employmentType.name }}
+            </label>
+          </div>
+        }
+      </div>
+      <div class="col-12 col-md-7 my-3">
+        <label class="input-label my-3">
+          График работы <span style="color: red;">*</span>
+        </label>
+        @for (workSchedule of workSchedules; track workSchedule.id) {
+          <div class="d-flex align-items-center mb-3">
+            <input formControlName="workScheduleId"
+                   type="radio"
+                   id="workSchedule{{ workSchedule.id }}"
+                   name="workScheduleId"
+                   [value]="workSchedule.id"
+            />
+            <label class="mx-3 checkbox-label" for="workSchedule{{ workSchedule.id }}">
+              {{ workSchedule.name }}
+            </label>
+          </div>
+        }
+      </div>
+      <div class="col-12 col-md-7 my-3">
+        <label class="input-label my-3">
+          Уровень образования
+        </label>
+        @for (educationType of educationTypes; track educationType.id) {
+          <div class="d-flex align-items-center mb-3">
+            <input formControlName="educationTypeId"
+                   type="radio"
+                   id="educationType{{ educationType.id }}"
+                   name="educationTypeId"
+                   [value]="educationType.id"
+            />
+            <label class="mx-3 checkbox-label" for="educationType{{ educationType.id }}">
+              {{ educationType.name }}
+            </label>
+          </div>
+        }
+      </div>
+      <div class="col-12 my-3">
+        <label class="input-label my-3">О вакансии</label>
+        <textarea formControlName="aboutVacancy"
+                  rows="6"
+                  class="form-control shadow-sm"
+                  placeholder="Расскажите про вакансию"
+                  maxlength="1000"
+                  aria-label="Расскажите про вакансию"
+        ></textarea>
+      </div>
+      <div>
+        <app-custom-button
+          (click)="deleteVacancy()"
+          backgroundColor="#ffffff"
+          textColor="red"
+          borderWidth="1px"
+          borderColor="#cccccc"
+        >
+          @if ((isLoading$ | async) && isDeleteButtonSelected) {
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          }
+          Удалить вакансию
+        </app-custom-button>
+      </div>
+      <div class="my-5 d-flex justify-content-center">
+        <app-custom-button
+          routerLink="../../vacancies-list"
+          class="mx-3"
+          backgroundColor="#ffffff"
+          textColor="black"
+          borderWidth="1px"
+          borderColor="#cccccc"
+        >
+          Назад
+        </app-custom-button>
+        <app-custom-button (click)="updateVacancy()">
+          @if ((isLoading$ | async) && !isDeleteButtonSelected) {
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          }
+          Сохранить изменения
+        </app-custom-button>
+      </div>
+    </form>
+  </div>
+</div>

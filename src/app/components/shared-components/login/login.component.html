@@ -1,0 +1,54 @@
+<div class="wrapper">
+  <div class="container">
+    <div class="row d-flex justify-content-center">
+      <div class="col-sm-6 col-md-3 col-12 my-5">
+        <form>
+          <div class="mb-3">
+            <label for="email" class="form-label">Электронная почта</label>
+            <input [formControl]="emailControl"
+                   (input)="resetErrorMessage()"
+                   type="email"
+                   class="form-control shadow-sm"
+                   maxlength="100"
+                   id="email"
+                   aria-describedby="email"
+            >
+          </div>
+          <div class="mb-2">
+            <label for="password" class="form-label">Пароль</label>
+            <input [formControl]="passwordControl"
+                   (input)="resetErrorMessage()"
+                   type="password"
+                   class="form-control shadow-sm"
+                   maxlength="20"
+                   id="password"
+                   aria-describedby="email"
+                   autocomplete="off"
+            >
+          </div>
+        </form>
+        @if (serverErrorMessage$ | async) {
+          <div class="mb-3">
+            <small class="text-danger small-text">{{ serverErrorMessage$ | async }}</small>
+          </div>
+        }
+        <div class="row mb-3">
+          <small>
+            <a class="registration-link" style="color: #3F51B5;" routerLink="{{ generateRegistrationLink }}">Регистрация</a>
+          </small>
+        </div>
+        <app-custom-button (click)="loginUser()" class="my-3">
+          @if (isLoading$ | async) {
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          }
+          Войти
+        </app-custom-button>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <small class="text-center">
+        <a class="back-link" routerLink="../" style="font-size: 0.8rem;">Назад</a>
+      </small>
+    </div>
+  </div>
+</div>

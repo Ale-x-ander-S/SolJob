@@ -1,0 +1,234 @@
+<div class="wrapper">
+  <div class="container">
+    <form [formGroup]="searchSettingsForm" ngxsForm="searchSettingsForm">
+      <div class="d-flex justify-content-center">
+        <div class="col-sm-6 col-md-3 col-12 d-none d-sm-block"></div>
+        <div class="col-sm-6 col-md-5 col-12 mt-5 mb-3">
+          <div class="input-search-container">
+            <input formControlName="searchTerm"
+                   (keydown.enter)="getSearchingVacancies()"
+                   type="text"
+                   id="search"
+                   class="form-control shadow-sm"
+                   [disableControl]="(isLoading$ | async)!"
+                   [matAutocomplete]="auto"
+                   placeholder="Должность или вакансия"
+                   autocomplete="off"
+            >
+            @if (searchTermControl.value) {
+              <i class="bi bi-x clear-icon fs-4" (click)="clearSearch()"></i>
+            }
+            <mat-autocomplete #auto="matAutocomplete">
+              @for (profession of professions$ | async | professionFilter: searchTermControl.value; track profession.professionName) {
+                <mat-option (mouseup)="getSearchingVacancies(profession)"
+                            [value]="profession.professionName"
+                >
+                  {{ profession.professionName }}
+                </mat-option>
+              }
+            </mat-autocomplete>
+          </div>
+          <div class="row mt-1">
+            @if (workScheduleIdControl.value) {
+              <div class="col-md-6 my-1">
+                <div (click)="resetFilter(this.workScheduleIdControl)" class="truncate p-1 text-muted">
+                  <i class="bi bi-x clear-icon">
+                    {{ workScheduleIdControl.value | nameById: "WORK_SCHEDULES" }}
+                  </i>
+                </div>
+              </div>
+            }
+            @if (experienceLevelIdControl.value) {
+              <div class="col-md-6 my-1">
+                <div (click)="resetFilter(this.experienceLevelIdControl)" class="truncate d-flex p-1 text-muted">
+                  <i class="bi bi-x clear-icon">
+                    {{ experienceLevelIdControl.value | nameById: "EXPERIENCE_LEVELS" }}
+                  </i>
+                </div>
+              </div>
+            }
+            @if (employmentTypeIdControl.value) {
+              <div class="col-md-6 my-1">
+                <div (click)="resetFilter(this.employmentTypeIdControl)" class="truncate p-1 text-muted">
+                  <i class="bi bi-x clear-icon">
+                    {{ employmentTypeIdControl.value | nameById: "EMPLOYMENT_TYPES" }}
+                  </i>
+                </div>
+              </div>
+            }
+            @if (educationTypeIdControl.value) {
+              <div class="col-md-6 my-1">
+                <div (click)="resetFilter(this.educationTypeIdControl)" class="truncate p-1 text-muted">
+                  <i class="bi bi-x clear-icon">
+                    {{ educationTypeIdControl.value | nameById: "EDUCATION_TYPES" }}
+                  </i>
+                </div>
+              </div>
+            }
+          </div>
+          <label
+            (click)="toggleSearchSettingsFlag()"
+            class="search-label mt-2"
+          >
+            Настроить фильтры
+          </label>
+        </div>
+        <div class="col-sm-5 col-md-3 p-0 my-5 mx-3 d-none d-sm-block">
+          <app-custom-button (click)="getSearchingVacancies()" [disabled]="(isLoading$ | async)!">
+            @if (isLoading$ | async) {
+              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            }
+            Найти
+          </app-custom-button>
+        </div>
+      </div>
+      <!--Search settings Collapse-->
+      <div class="d-flex justify-content-center">
+        <div class="collapse mb-5" [ngbCollapse]="isSearchSettingOpenFlag">
+          <div class="row">
+            <h6>Настройки фильтров</h6>
+          </div>
+          <div class="card card-body">
+            <div class="row">
+              <div class="row d-flex justify-content-end p-0">
+                <button
+                  (click)="toggleSearchSettingsFlag()"
+                  type="button"
+                  class="btn-close"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#searchSettingsCollapse"
+                  aria-controls="searchSettingsCollapse"
+                ></button>
+              </div>
+              <div class="col-lg-3 col-md-6 col-xs-6 col-sm-6 mb-3">
+                <h6>График работы
+                  @if (this.workScheduleIdControl.value) {
+                    <small (click)="resetFilter(this.workScheduleIdControl)" class="reset-filter mx-2">Сбросить</small>
+                  }
+                </h6>
+                @for (workSchedule of workSchedules; track workSchedule.id) {
+                  <div class="d-flex align-items-center mb-1">
+                    <input
+                      formControlName="workScheduleId"
+                      class="radio-input"
+                      type="radio"
+                      id="workSchedule{{ workSchedule.id }}"
+                      name="workScheduleId"
+                      [value]="workSchedule.id"
+                    >
+                    <label class="mx-2 radio-label" for="workSchedule{{ workSchedule.id }}">
+                      {{ workSchedule.name }}
+                    </label>
+                  </div>
+                }
+              </div>
+              <div class="col-lg-3 col-md-6 col-xs-6 col-sm-6 mb-3">
+                <h6>
+                  Опыт работы
+                  @if (this.experienceLevelIdControl.value) {
+                    <small (click)="resetFilter(this.experienceLevelIdControl)"
+                           class="reset-filter mx-2">Сбросить</small>
+                  }
+                </h6>
+                @for (experienceLevel of experienceLevels; track experienceLevel.id) {
+                  <div class="d-flex align-items-center mb-1">
+                    <input
+                      formControlName="experienceLevelId"
+                      class="radio-input"
+                      type="radio"
+                      id="experienceLevel{{ experienceLevel.id }}"
+                      name="experienceLevelId"
+                      [value]="experienceLevel.id"
+                    >
+                    <label class="mx-2 radio-label" for="experienceLevel{{ experienceLevel.id }}">
+                      {{ experienceLevel.name }}
+                    </label>
+                  </div>
+                }
+              </div>
+              <div class="col-lg-3 col-md-6 col-xs-6 col-sm-6 mb-3">
+                <h6>
+                  Тип занятости
+                  @if (this.employmentTypeIdControl.value) {
+                    <small (click)="resetFilter(this.employmentTypeIdControl)"
+                           class="reset-filter mx-2">Сбросить</small>
+                  }
+                </h6>
+                @for (employmentType of employmentTypes; track employmentType.id) {
+                  <div class="d-flex align-items-center mb-1">
+                    <input
+                      formControlName="employmentTypeId"
+                      class="radio-input"
+                      type="radio"
+                      id="employmentType{{ employmentType.id }}"
+                      name="employmentTypeId"
+                      [value]="employmentType.id"
+                    >
+                    <label class="mx-2 radio-label" for="employmentType{{ employmentType.id }}">
+                      {{ employmentType.name }}
+                    </label>
+                  </div>
+                }
+              </div>
+              <div class="col-lg-3 col-md-6 col-xs-6 col-sm-6 mb-3">
+                <h6>
+                  Образование
+                  @if (this.educationTypeIdControl.value) {
+                    <small (click)="resetFilter(this.educationTypeIdControl)" class="reset-filter mx-2">Сбросить</small>
+                  }
+                </h6>
+                @for (educationType of educationTypes; track educationType.id) {
+                  <div class="d-flex align-items-center mb-1">
+                    <input
+                      formControlName="educationTypeId"
+                      class="radio-input"
+                      type="radio"
+                      id="educationType{{ educationType.id }}"
+                      name="educationTypeId"
+                      [value]="educationType.id"
+                    >
+                    <label class="mx-2 radio-label" for="educationType{{ educationType.id }}">
+                      {{ educationType.name }}
+                    </label>
+                  </div>
+                }
+              </div>
+            </div>
+            <div class="d-flex justify-content-end">
+              <app-custom-button
+                (click)="toggleSearchSettingsFlag()"
+                class="mx-3"
+                backgroundColor="#ffffff"
+                textColor="black"
+                borderWidth="1px"
+                borderColor="#cccccc"
+                data-bs-toggle="collapse"
+                data-bs-target="#searchSettingsCollapse"
+                aria-controls="searchSettingsCollapse"
+              >
+                Закрыть
+              </app-custom-button>
+              <app-custom-button (click)="resetSearchFilters()">Сбросить все</app-custom-button>
+            </div>
+          </div>
+        </div>
+      </div>
+      @if ((searchResultsVacancies$ | async)?.length && isSearchSettingOpenFlag && !showContent) {
+        <app-jobseeker-vacancy-list
+          [searchResultsVacancies]="(searchResultsVacancies$ | async)!"
+        >
+        </app-jobseeker-vacancy-list>
+      } @else if ((searchResultsVacancies$ | async)?.length === 0 && isSearchSettingOpenFlag && !showContent) {
+        <div @fadeInOut class="d-flex justify-content-center my-5">
+          <h1 class="no-found-title text-muted">
+            По Вашему запросу ничего не найдено...
+          </h1>
+        </div>
+      } @else if (isSearchSettingOpenFlag && !showContent) {
+        <div @fadeInOut class="d-flex justify-content-center my-5">
+          <img class="main-img" src="assets/img/search.png" alt="Search Img">
+        </div>
+      }
+    </form>
+  </div>
+</div>
