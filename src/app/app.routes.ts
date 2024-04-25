@@ -105,7 +105,11 @@ export const routes: Routes = [
     ]
   },
 
-  {path: "employer/:id", redirectTo: "employer/:id/search", pathMatch: "full"},
+  {
+    path: "employer/:id",
+    redirectTo: "employer/:id/search",
+    pathMatch: "full"
+  },
   {
     path: "employer/:id",
     children: [

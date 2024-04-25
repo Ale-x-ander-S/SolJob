@@ -19,4 +19,5 @@ export class CustomButtonComponent {
   @Input() boxShadow: string = "";
   @Input() padding: string = ""
   @Input() disabled: boolean = false;
+  @Input() hasIndicator: boolean = false;
 }

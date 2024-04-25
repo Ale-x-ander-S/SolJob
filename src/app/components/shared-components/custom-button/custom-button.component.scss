@@ -9,6 +9,10 @@ button {
   background-color: $green-color;
   color: #ffffff;
   font-family: Roboto-Light, sans-serif;
+  //position: relative;
+  //display: flex;
+  //align-items: center;
+  //justify-content: center;
 
   &:hover {
     background-color: darken($green-color, 5%);
@@ -25,4 +29,15 @@ button[disabled] {
   opacity: 0.6;
   transform: none;
   box-shadow: none;
+}
+
+.indicator {
+  position: relative;
+  top: -1.7em;
+  right: -1em;
+  background-color: red;
+  color: white;
+  font-size: 50%;
+  border-radius: 50%;
+  padding: 0 4px;
 }

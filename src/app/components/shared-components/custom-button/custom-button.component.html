@@ -8,4 +8,7 @@
   [disabled]="disabled"
 >
   <ng-content></ng-content>
+  @if (hasIndicator) {
+    <sup class="indicator"></sup>
+  }
 </button>

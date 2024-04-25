@@ -1,4 +1,4 @@
-export interface JobseekerResponsiveVacancy {
+export interface VacancyResponse {
   responseId?: number,
   vacancyId: number,
   organizationName: string;

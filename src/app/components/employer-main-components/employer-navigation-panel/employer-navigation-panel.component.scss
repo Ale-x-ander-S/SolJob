@@ -56,3 +56,13 @@ i:hover {
   color: red;
 }
 
+.indicator {
+  position: relative;
+  top: -1.7em;
+  right: -0.5em;
+  background-color: red;
+  color: white;
+  font-size: 50%;
+  border-radius: 50%;
+  padding: 0 4px;
+}

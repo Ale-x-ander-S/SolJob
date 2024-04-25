@@ -5,8 +5,6 @@ import {
   JobseekerNavigationPanelComponent
 } from "../../jobseeker-main-components/jobseeker-navigation-panel/jobseeker-navigation-panel.component";
 import { MatAutocomplete, MatAutocompleteTrigger, MatOption } from "@angular/material/autocomplete";
-import { MatButton } from "@angular/material/button";
-import { MatRadioButton, MatRadioGroup } from "@angular/material/radio";
 import { NgxsFormPluginModule } from "@ngxs/form-plugin";
 import { EmployerNavigationPanelComponent } from "../employer-navigation-panel/employer-navigation-panel.component";
 import { Select, Store } from "@ngxs/store";

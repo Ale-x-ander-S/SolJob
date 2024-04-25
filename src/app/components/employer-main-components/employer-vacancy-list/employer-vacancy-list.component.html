@@ -3,6 +3,11 @@
     <div class="row my-3">
       <h1>Мои вакансии</h1>
     </div>
+    <div class="row my-3">
+      <app-custom-button routerLink="/employer/{{ tokenUserData?.userId }}/vacancy-create">
+        Создать вакансию
+      </app-custom-button>
+    </div>
     <div class="row">
       <div class="col-md-8">
         @for (vacancy of employerVacancies$ | async; track vacancy.vacancyId) {
@@ -31,13 +36,26 @@
               }
             </div>
             <div class="d-flex justify-content-between mx-3 mb-2">
-              <div class="col-5 col-md-3">
-                <a routerLink="../vacancy-edit/{{vacancy.vacancyId}}" class="edit-vacancy-link">
-                  Редактировать
-                </a>
-              </div>
-              <div class="col-7 col-md-4 text-end">
-                <small class="text-muted m-2">
+              <app-custom-button
+                routerLink="../vacancy-edit/{{vacancy.vacancyId}}"
+                [backgroundColor]="'#f8f9fa'"
+                [textColor]="'#279B38'"
+                [borderColor]="'#bbffbb'"
+              >
+                Редактировать
+              </app-custom-button>
+              <app-custom-button
+                [backgroundColor]="'#f8f9fa'"
+                [textColor]="'#279B38'"
+                [borderColor]="'#bbffbb'"
+                [hasIndicator]="employerNoViewedVacanciesResponses$ | async | isVacancyHasNewResponse: vacancy.vacancyId"
+              >
+                Отклики
+              </app-custom-button>
+            </div>
+            <div class="d-flex justify-content-between mx-3 mb-2">
+              <div class="col-12 col-md-4 text-end">
+                <small class="text-muted m-0">
                   от {{ vacancy.createdDateUTC | date: "dd-MM-yyyy":"UTC-0200" }}
                 </small>
               </div>

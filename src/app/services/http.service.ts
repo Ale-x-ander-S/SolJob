@@ -11,7 +11,7 @@ import { Vacancy, VacancyToServer, VacancyToUpdate } from "../models/vacancy.mod
 import { SearchSettings } from "../intefaces/search-settings.interface";
 import { JobseekerFavorite } from "../intefaces/jobseeker-favorite.interface";
 import { JobseekerResponse } from "../intefaces/jobseeker-responce.interface";
-import { JobseekerResponsiveVacancy } from "../intefaces/jobseeker-responsive-vacancy";
+import { VacancyResponse } from "../intefaces/jobseeker-responsive-vacancy";
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +25,7 @@ export class HttpService {
   private vacancyUrl = "https://localhost:7149/api/VacancyAPI/";
   private jobseekerFavoriteUrl = "https://localhost:7149/api/JobseekerFavoriteAPI/";
   private jobseekerVacancyResponseUrl = "https://localhost:7149/api/JobseekerResponseAPI/";
+  private employerVacancyResponseUrl = "https://localhost:7149/api/EmployerResponseAPI/";
 
   registration(userRegistrationInfo: UserRegistrationInfo): Observable<ApiResponse<UserRegistrationInfo>> {
     return this.http.post<ApiResponse<UserRegistrationInfo>>(`${this.userUrl}registration`, userRegistrationInfo);
@@ -148,11 +149,16 @@ export class HttpService {
     return this.http.post<ApiResponse<JobseekerResponse>>(this.jobseekerVacancyResponseUrl, jobseekerVacancyResponse);
   }
 
-  getJobseekerResponsiveVacancies(userId: number): Observable<ApiResponse<JobseekerResponsiveVacancy[]>> {
-    return this.http.get<ApiResponse<JobseekerResponsiveVacancy[]>>(`${this.jobseekerVacancyResponseUrl}${userId}`)
+  getJobseekerResponsiveVacancies(userId: number): Observable<ApiResponse<VacancyResponse[]>> {
+    return this.http.get<ApiResponse<VacancyResponse[]>>(`${this.jobseekerVacancyResponseUrl}${userId}`)
   }
 
   deleteJobseekerResponsiveVacancy(userId: number, vacancyId: number): Observable<ApiResponse> {
     return this.http.delete<ApiResponse>(`${this.jobseekerVacancyResponseUrl}${userId}/${vacancyId}`)
+  }
+
+  // Employer Vacancy Response --------------------------------------------------------------------
+  getEmployerVacanciesResponses(userId: number): Observable<ApiResponse<VacancyResponse[]>> {
+    return this.http.get<ApiResponse<VacancyResponse[]>>(`${this.employerVacancyResponseUrl}${userId}`)
   }
 }

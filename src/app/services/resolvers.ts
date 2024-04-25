@@ -114,3 +114,5 @@ export const loadResponsiveVacanciesResolver = (): void => {
     store.dispatch(new LoadJobseekerResponsiveVacancies());
   }
 };
+
+

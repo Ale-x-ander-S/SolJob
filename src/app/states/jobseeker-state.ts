@@ -11,7 +11,7 @@ import {
   DeleteUser,
   DeleteVacancy,
   IncrementStepIndex,
-  LoadCurrentUserType,
+  LoadCurrentUserType, LoadEmployerNoViewedVacanciesResponses,
   LoadEmployerVacancies, LoadFavoriteVacancies, LoadJobseekerResponsiveVacancies,
   LoadProfession,
   LoadProfessions,
@@ -45,7 +45,7 @@ import { buildVacancyToCreate, Vacancy, VacancyToServer, VacancyToUpdate } from 
 import { SearchSettings } from "../intefaces/search-settings.interface";
 import { JobseekerFavorite } from "../intefaces/jobseeker-favorite.interface";
 import { JobseekerResponse } from "../intefaces/jobseeker-responce.interface";
-import { JobseekerResponsiveVacancy } from "../intefaces/jobseeker-responsive-vacancy";
+import { VacancyResponse } from "../intefaces/jobseeker-responsive-vacancy";
 import { NotificationService } from "../services/notification.service";
 
 const defaultState: JobseekerStateModel = {
@@ -62,7 +62,8 @@ const defaultState: JobseekerStateModel = {
   searchResultsVacancies: undefined,
   favoriteVacancies: undefined,
   selectedVacancy: undefined,
-  responsiveVacancies: undefined
+  responsiveVacancies: undefined,
+  employerNoViewedVacanciesResponses: undefined
 };
 
 interface JobseekerStateModel {
@@ -79,7 +80,8 @@ interface JobseekerStateModel {
   searchResultsVacancies: Vacancy[] | [] | undefined;
   favoriteVacancies: Vacancy[] | undefined;
   selectedVacancy: Vacancy | undefined;
-  responsiveVacancies: JobseekerResponsiveVacancy[] | undefined;
+  responsiveVacancies: VacancyResponse[] | undefined;
+  employerNoViewedVacanciesResponses: VacancyResponse[] | undefined;
 }
 
 @Injectable()
@@ -164,6 +166,11 @@ export class JobseekerState {
   @Selector([JobseekerState])
   static responsiveVacancies(state: JobseekerStateModel) {
     return state.responsiveVacancies;
+  }
+
+  @Selector([JobseekerState])
+  static employerNoViewedVacanciesResponses(state: JobseekerStateModel) {
+    return state.employerNoViewedVacanciesResponses;
   }
 
   @Action(SetStartPageType)
@@ -608,6 +615,7 @@ export class JobseekerState {
           this.ngZone.run(() => {
             this.router.navigate([`/employer/${currentUserId}/vacancies-list`]);
           });
+          this.notificationService.showSuccessMessage("Вакансия успешно удалена");
         } else {
           console.log(response.errorMessages)
         }
@@ -780,7 +788,7 @@ export class JobseekerState {
     return this.httpService.createJobseekerVacancyResponse(jobseekerVacancyResponse).pipe(
       tap(response => {
         if (response.isSuccess) {
-          const newResponsiveVacancy: JobseekerResponsiveVacancy = {
+          const newResponsiveVacancy: VacancyResponse = {
             ...response.result,
             professionName: selectedVacancy?.professionName ?? "",
             professionSpecialization: selectedVacancy?.professionSpecialization ?? "",
@@ -839,6 +847,25 @@ export class JobseekerState {
       }),
       catchError(error => {
         console.error('An error occurred while loading responsive vacancies:', error);
+        return EMPTY;
+      })
+    )
+  }
+
+  @Action(LoadEmployerNoViewedVacanciesResponses)
+  loadEmployerNoViewedVacanciesResponses(ctx: StateContext<JobseekerStateModel>) {
+    const currentUserId: number = this.tokenService.getTokenUserData()?.userId ?? 0;
+
+    return this.httpService.getEmployerVacanciesResponses(currentUserId).pipe(
+      tap(response => {
+        if (response.isSuccess && response.result.length) {
+          ctx.patchState({employerNoViewedVacanciesResponses: response.result});
+        } else {
+          console.log(response.errorMessages);
+        }
+      }),
+      catchError(error => {
+        console.error('An error occurred while loading employer vacancies responses:', error);
         return EMPTY;
       })
     )

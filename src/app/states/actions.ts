@@ -161,6 +161,10 @@ export class DeleteJobseekerResponsiveVacancy {
   }
 }
 
+export class LoadEmployerNoViewedVacanciesResponses {
+  static readonly type = "[JobseekerState] Load Employer No Viewed Vacancies Responses";
+}
+
 export class IncrementStepIndex {
   static readonly type = "[JobseekerState] Increment Step Index";
 }

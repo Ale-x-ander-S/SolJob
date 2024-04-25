@@ -7,11 +7,14 @@
             <span class="sol">Sol</span><span class="job">Job</span>
           </a>
         </div>
-        <div class="col-4 d-flex justify-content-center p-0 d-none d-md-block">
-            <a class="resume-link" routerLink="/employer/{{ tokenUserData?.userId }}/vacancy-create" routerLinkActive="active">Создать вакансию</a>
-        </div>
         <div class="col-3 d-flex justify-content-center p-0 d-none d-md-block">
           <a class="resume-link" routerLink="/employer/{{ tokenUserData?.userId }}/vacancies-list" routerLinkActive="active">Мои вакансии</a>
+        </div>
+        <div class="col-4 d-flex justify-content-center p-0 d-none d-md-block">
+          <a class="resume-link" routerLink="/employer/{{ tokenUserData?.userId }}/vacancy-create" routerLinkActive="active">Отклики</a>
+          @if(employerVacanciesResponses$ | async) {
+            <sup class="indicator"></sup>
+          }
         </div>
       </div>
     </div>
@@ -37,9 +40,22 @@
             <i class="bi bi-person-circle fs-4"></i>
           </a>
           <mat-menu #menu="matMenu">
-            <a routerLink="/employer/{{ tokenUserData?.userId }}/account" mat-menu-item >{{ tokenUserData?.userFirstName }}</a>
-              <a routerLink="/employer/{{ tokenUserData?.userId }}/vacancies-list" class="d-md-none" mat-menu-item>Мои вакансии</a>
-              <a routerLink="/employer/{{ tokenUserData?.userId }}/vacancy-create" class="d-md-none" mat-menu-item>Создать вакансию</a>
+            <a routerLink="/employer/{{ tokenUserData?.userId }}/account" mat-menu-item >
+              {{ tokenUserData?.userFirstName }}
+            </a>
+              <a routerLink="/employer/{{ tokenUserData?.userId }}/vacancies-list" class="d-md-none" mat-menu-item>
+                Мои вакансии
+              </a>
+              <a routerLink="/employer/{{ tokenUserData?.userId }}/vacancy-create" class="d-md-none" mat-menu-item>
+                Создать вакансию
+              </a>
+              <a routerLink="/employer/{{ tokenUserData?.userId }}/vacancy-create" class="d-md-none" mat-menu-item>
+                Отклики
+                @if(employerVacanciesResponses$ | async) {
+                  <sup class="indicator"></sup>
+                }
+              </a>
+
             <a routerLink="/employer/{{ tokenUserData?.userId }}/account" mat-menu-item>Настройки</a>
             <button class="exit-button" mat-menu-item (click)="logout()">Выход</button>
           </mat-menu>
