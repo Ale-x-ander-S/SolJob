@@ -1,0 +1,43 @@
+@import '../../../../styles/colors';
+
+.wrapper {
+  display: flex;
+  min-height: 88vh;
+}
+
+h1 {
+  font-family: Roboto-Regular, sans-serif;
+}
+
+small {
+  font-family: Roboto-Light, sans-serif;
+}
+
+sup {
+  font-family: Roboto-Light, sans-serif;
+  color: $danger-color;
+  margin-left: 5px;
+  font-size: 60%;
+}
+
+.response-title {
+  font-family: Roboto-Regular, sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: $green-color;
+
+  &:hover {
+    color: lighten($green-color, 10%);
+    text-decoration: underline;
+  }
+}
+
+.viewed {
+  color: #6c757d;
+}
+
+.not-viewed {
+  font-family: Roboto-Medium, sans-serif;
+}

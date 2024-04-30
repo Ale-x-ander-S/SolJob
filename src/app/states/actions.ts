@@ -165,6 +165,10 @@ export class LoadEmployerNoViewedVacanciesResponses {
   static readonly type = "[JobseekerState] Load Employer No Viewed Vacancies Responses";
 }
 
+export class LoadAllEmployerVacanciesResponses {
+  static readonly type = "[JobseekerState] Load All Employer Vacancies Responses";
+}
+
 export class IncrementStepIndex {
   static readonly type = "[JobseekerState] Increment Step Index";
 }

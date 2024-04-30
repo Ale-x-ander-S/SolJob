@@ -10,7 +10,7 @@ import {
   DeleteResume,
   DeleteUser,
   DeleteVacancy,
-  IncrementStepIndex,
+  IncrementStepIndex, LoadAllEmployerVacanciesResponses,
   LoadCurrentUserType, LoadEmployerNoViewedVacanciesResponses,
   LoadEmployerVacancies, LoadFavoriteVacancies, LoadJobseekerResponsiveVacancies,
   LoadProfession,
@@ -47,6 +47,7 @@ import { JobseekerFavorite } from "../intefaces/jobseeker-favorite.interface";
 import { JobseekerResponse } from "../intefaces/jobseeker-responce.interface";
 import { VacancyResponse } from "../intefaces/jobseeker-responsive-vacancy";
 import { NotificationService } from "../services/notification.service";
+import { NoViewedVacancyResponse } from "../intefaces/no-viewed-vacancy-response.interface";
 
 const defaultState: JobseekerStateModel = {
   isJobseekerStartPage: undefined,
@@ -63,7 +64,8 @@ const defaultState: JobseekerStateModel = {
   favoriteVacancies: undefined,
   selectedVacancy: undefined,
   responsiveVacancies: undefined,
-  employerNoViewedVacanciesResponses: undefined
+  employerNoViewedVacanciesResponses: undefined,
+  allEmployerVacanciesResponses: undefined
 };
 
 interface JobseekerStateModel {
@@ -81,7 +83,8 @@ interface JobseekerStateModel {
   favoriteVacancies: Vacancy[] | undefined;
   selectedVacancy: Vacancy | undefined;
   responsiveVacancies: VacancyResponse[] | undefined;
-  employerNoViewedVacanciesResponses: VacancyResponse[] | undefined;
+  employerNoViewedVacanciesResponses: NoViewedVacancyResponse[] | undefined;
+  allEmployerVacanciesResponses: JobseekerResponse[] | undefined;
 }
 
 @Injectable()
@@ -171,6 +174,11 @@ export class JobseekerState {
   @Selector([JobseekerState])
   static employerNoViewedVacanciesResponses(state: JobseekerStateModel) {
     return state.employerNoViewedVacanciesResponses;
+  }
+
+  @Selector([JobseekerState])
+  static allEmployerVacanciesResponses(state: JobseekerStateModel) {
+    return state.allEmployerVacanciesResponses;
   }
 
   @Action(SetStartPageType)
@@ -865,7 +873,26 @@ export class JobseekerState {
         }
       }),
       catchError(error => {
-        console.error('An error occurred while loading employer vacancies responses:', error);
+        console.error('An error occurred while loading employer no viewed vacancies responses:', error);
+        return EMPTY;
+      })
+    )
+  }
+
+  @Action(LoadAllEmployerVacanciesResponses)
+  loadAllEmployerVacanciesResponses(ctx: StateContext<JobseekerStateModel>) {
+    const currentUserId: number = this.tokenService.getTokenUserData()?.userId ?? 0;
+
+    return this.httpService.getAllEmployerVacanciesResponses(currentUserId).pipe(
+      tap(response => {
+        if (response.isSuccess && response.result.length) {
+          ctx.patchState({allEmployerVacanciesResponses: response.result});
+        } else {
+          console.log(response.errorMessages);
+        }
+      }),
+      catchError(error => {
+        console.error('An error occurred while loading employer all vacancies responses:', error);
         return EMPTY;
       })
     )

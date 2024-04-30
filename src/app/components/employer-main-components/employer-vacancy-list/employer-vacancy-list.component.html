@@ -8,9 +8,13 @@
         Создать вакансию
       </app-custom-button>
     </div>
+    <div class="my-3 ">
+      <input (click)="toggleShowOnlyNewResponses()" type="checkbox" id="onlyNewResponse" class="form-check-input">
+      <label class="mx-1" for="onlyNewResponse">Показать вакансии с новыми откликами</label>
+    </div>
     <div class="row">
       <div class="col-md-8">
-        @for (vacancy of employerVacancies$ | async; track vacancy.vacancyId) {
+        @for (vacancy of employerVacancies$ | async | filterVacanciesByNewResponses: showOnlyNewResponses; track vacancy.vacancyId) {
           <div class="card mb-3">
             <div class="card-body">
               <div class="row">
@@ -48,13 +52,13 @@
                 [backgroundColor]="'#f8f9fa'"
                 [textColor]="'#279B38'"
                 [borderColor]="'#bbffbb'"
-                [hasIndicator]="employerNoViewedVacanciesResponses$ | async | isVacancyHasNewResponse: vacancy.vacancyId"
+                [hasIndicator]="employerNoViewedVacanciesResponses$ | async | isVacancyHasNewResponsePipe: vacancy.vacancyId"
               >
                 Отклики
               </app-custom-button>
             </div>
             <div class="d-flex justify-content-between mx-3 mb-2">
-              <div class="col-12 col-md-4 text-end">
+              <div class="col-12 text-start">
                 <small class="text-muted m-0">
                   от {{ vacancy.createdDateUTC | date: "dd-MM-yyyy":"UTC-0200" }}
                 </small>

@@ -2,6 +2,7 @@ import { inject } from "@angular/core";
 import { ActivatedRouteSnapshot, ResolveFn, Router } from "@angular/router";
 import { Store } from "@ngxs/store";
 import {
+  LoadAllEmployerVacanciesResponses,
   LoadEmployerVacancies, LoadFavoriteVacancies, LoadJobseekerResponsiveVacancies,
   LoadProfession,
   LoadProfessions,
@@ -14,10 +15,7 @@ import { UserInfo } from "../models/user-info.model";
 import { JobseekerState } from "../states/jobseeker-state";
 import { TokenService } from "./token.service";
 import { EMPLOYER, JOBSEEKER } from "../constans/user-type.constant";
-import { Vacancy } from "../models/vacancy.model";
-import {
-  EmployerVacancyEditComponent
-} from "../components/employer-main-components/employer-vacancy-edit/employer-vacancy-edit.component";
+
 
 export const setStartPageTypeResolver: ResolveFn<Observable<boolean>> = (route: ActivatedRouteSnapshot) => {
   const store: Store = inject(Store);
@@ -112,6 +110,14 @@ export const loadResponsiveVacanciesResolver = (): void => {
   const currentResponsiveVacancies = store.selectSnapshot(JobseekerState.responsiveVacancies) ?? [];
   if (!currentResponsiveVacancies.length) {
     store.dispatch(new LoadJobseekerResponsiveVacancies());
+  }
+};
+
+export const loadAllEmployerVacanciesResponsesResolver = (): void => {
+  const store = inject(Store);
+  const currentAllEmployerVacanciesResponses = store.selectSnapshot(JobseekerState.allEmployerVacanciesResponses) ?? [];
+  if (!currentAllEmployerVacanciesResponses.length) {
+    store.dispatch(new LoadAllEmployerVacanciesResponses());
   }
 };
 

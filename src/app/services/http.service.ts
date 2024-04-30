@@ -12,6 +12,7 @@ import { SearchSettings } from "../intefaces/search-settings.interface";
 import { JobseekerFavorite } from "../intefaces/jobseeker-favorite.interface";
 import { JobseekerResponse } from "../intefaces/jobseeker-responce.interface";
 import { VacancyResponse } from "../intefaces/jobseeker-responsive-vacancy";
+import { NoViewedVacancyResponse } from "../intefaces/no-viewed-vacancy-response.interface";
 
 @Injectable({
   providedIn: 'root'
@@ -158,7 +159,11 @@ export class HttpService {
   }
 
   // Employer Vacancy Response --------------------------------------------------------------------
-  getEmployerVacanciesResponses(userId: number): Observable<ApiResponse<VacancyResponse[]>> {
-    return this.http.get<ApiResponse<VacancyResponse[]>>(`${this.employerVacancyResponseUrl}${userId}`)
+  getEmployerVacanciesResponses(userId: number): Observable<ApiResponse<NoViewedVacancyResponse[]>> {
+    return this.http.get<ApiResponse<NoViewedVacancyResponse[]>>(`${this.employerVacancyResponseUrl}${userId}`)
+  }
+
+  getAllEmployerVacanciesResponses(userId: number): Observable<ApiResponse<JobseekerResponse[]>> {
+    return this.http.get<ApiResponse<JobseekerResponse[]>>(`${this.employerVacancyResponseUrl}GetAllEmployerVacanciesResponses/${userId}`)
   }
 }

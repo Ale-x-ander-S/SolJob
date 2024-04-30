@@ -1,6 +1,5 @@
 @import '../../../../styles/colors';
 
-
 .wrapper {
   display: flex;
   min-height: 88vh;
@@ -34,7 +33,7 @@ small {
   font-family: Roboto-Light, sans-serif;
 }
 
-.income-per-month {
+.income-per-month, label {
   font-family: Roboto-Light, sans-serif;
 }
 
@@ -47,5 +46,25 @@ small {
     color: darken($green-color, 5px);
     text-decoration: underline;
   }
+}
+
+input[type="checkbox"] {
+  appearance: none;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid #cccccc;
+  background-color: #ffffff;
+  cursor: pointer;
+  margin: 0;
+}
+
+input[type="checkbox"]:focus {
+  box-shadow: none;
+}
+
+input[type="checkbox"]:checked {
+  background-color: $green-color;
 }
 

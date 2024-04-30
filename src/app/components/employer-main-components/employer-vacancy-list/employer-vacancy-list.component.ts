@@ -8,8 +8,9 @@ import { AsyncPipe, DatePipe } from "@angular/common";
 import { RouterLink } from "@angular/router";
 import { CustomButtonComponent } from "../../shared-components/custom-button/custom-button.component";
 import { TokenService } from "../../../services/token.service";
-import { VacancyResponse } from "../../../intefaces/jobseeker-responsive-vacancy";
 import { IsVacancyHasNewResponsePipe } from "../../../services/pipes/is-vacancy-has-new-response.pipe";
+import { NoViewedVacancyResponse } from "../../../intefaces/no-viewed-vacancy-response.interface";
+import { FilterVacanciesByNewResponsesPipe } from "../../../services/pipes/filter-vacancies-by-new-responses.pipe";
 
 @Component({
   selector: 'app-employer-vacancy-list',
@@ -20,7 +21,9 @@ import { IsVacancyHasNewResponsePipe } from "../../../services/pipes/is-vacancy-
     DatePipe,
     RouterLink,
     CustomButtonComponent,
-    IsVacancyHasNewResponsePipe
+    IsVacancyHasNewResponsePipe,
+    IsVacancyHasNewResponsePipe,
+    FilterVacanciesByNewResponsesPipe
   ],
   templateUrl: './employer-vacancy-list.component.html',
   styleUrl: './employer-vacancy-list.component.scss'
@@ -29,9 +32,15 @@ export class EmployerVacancyListComponent {
   private tokenService = inject(TokenService);
   readonly tokenUserData: { userId: number } | undefined = this.tokenService.getTokenUserData();
 
+  showOnlyNewResponses = false;
+
   @Select(JobseekerState.employerVacancies)
   employerVacancies$: Observable<Vacancy[]> | undefined;
 
   @Select(JobseekerState.employerNoViewedVacanciesResponses)
-  employerNoViewedVacanciesResponses$: Observable<VacancyResponse[]> | undefined;
+  employerNoViewedVacanciesResponses$: Observable<NoViewedVacancyResponse[]> | undefined;
+
+  toggleShowOnlyNewResponses() {
+    this.showOnlyNewResponses = !this.showOnlyNewResponses;
+  }
 }

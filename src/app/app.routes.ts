@@ -5,6 +5,7 @@ import {
   JobseekerSearchComponent
 } from "./components/jobseeker-main-components/jobseeker-search/jobseeker-search.component";
 import {
+  loadAllEmployerVacanciesResponsesResolver,
   loadEmployerVacanciesResolver, loadFavoriteVacanciesResolver,
   loadProfessionsResolver, loadResponsiveVacanciesResolver,
   loadUserInfoResolver, loadUserProfessionResolver, loadUserResumeResolver, loadVacancyResolver,
@@ -137,6 +138,11 @@ export const routes: Routes = [
         path: "vacancy-edit/:vacancyId",
         resolve: [ setEmployerVacancyToEditResolver ],
         loadComponent: () => import('./components/employer-main-components/employer-vacancy-edit/employer-vacancy-edit.component').then((c) => c.EmployerVacancyEditComponent)
+      },
+      {
+        path: "responses",
+        resolve: [ loadAllEmployerVacanciesResponsesResolver ],
+        loadComponent: () => import('./components/employer-main-components/employer-responses-container/employer-responses-container.component').then((c) => c.EmployerResponsesContainerComponent)
       },
       {
         path: "account",

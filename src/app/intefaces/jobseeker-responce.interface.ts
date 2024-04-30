@@ -5,4 +5,8 @@ export interface JobseekerResponse {
   vacancyId: number,
   isEmployerResponseViewed: boolean,
   createdDateUTC?: string
+  jobseekerFirstName?: string,
+  jobseekerMiddleName?: string,
+  jobseekerLastName?: string,
+  professionName?: string
 }

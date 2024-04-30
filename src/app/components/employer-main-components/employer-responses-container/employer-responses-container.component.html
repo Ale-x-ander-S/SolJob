@@ -1,0 +1,31 @@
+<div class="wrapper">
+  <div class="container">
+    <div class="row my-3">
+      <h1>Отклики на вакансии</h1>
+    </div>
+    @for(response of allEmployerVacanciesResponses$ | async; track response.responseId) {
+      <div class="mb-3">
+        <small class="text-muted">{{ response.createdDateUTC | date: "dd-MM-yyyy hh:mm":"UTC-0200" }}</small>
+        @if(!response.isEmployerResponseViewed) {
+          <sup>Не просмотрено</sup>
+        }
+        <div [ngClass]="{'viewed': response.isEmployerResponseViewed, 'not-viewed': !response.isEmployerResponseViewed}" class="response-title mb-1">
+          <a href="">
+            {{ response.jobseekerFirstName! | formatToShortName: response.jobseekerLastName }}:
+          </a> отклик на вакансию
+          <a routerLink="../vacancy-edit/{{ response.vacancyId }}">
+            {{ response.professionName }}
+          </a>
+        </div>
+        <app-custom-button
+          [padding]="'5px'"
+          [backgroundColor]="'#f8f9fa'"
+          [textColor]="'#279B38'"
+          [borderColor]="'#bbffbb'"
+        >
+          Смотреть резюме
+        </app-custom-button>
+      </div>
+    }
+  </div>
+</div>
